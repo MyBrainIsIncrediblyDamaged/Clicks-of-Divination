@@ -6,11 +6,12 @@ import java.awt.Dimension;
 
 import javax.swing.*;
 public class ClickerGame {
+    static JFrame frame = new JFrame("Clicks of Divination");
     public static void main(String[] args){
-        JFrame frame = new JFrame("Clicks of Divination");
+        ClickerPanel cPanel = new ClickerPanel();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ClickerPanel());
-        frame.setPreferredSize(new Dimension(1000, 1000));
+        frame.getContentPane().add(cPanel);
+        frame.setPreferredSize(new Dimension(1500, 1000));
         frame.pack();
         frame.setVisible(true);
         
