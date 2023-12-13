@@ -24,7 +24,7 @@ public class StatsPanel extends JPanel{
     double CpMult = 1;
     double ACp = 1;
     long DI = 0;
-    double DIm = 1.03;
+    double DIm = 1.04;
     double Cpm = 1;
     double ACpm = 1;
     double pMult = 1;
@@ -96,7 +96,7 @@ public class StatsPanel extends JPanel{
     }
     public StatsPanel(){
         statsGrid = new JButton[2][3];
-        this.setBackground(Color.blue);
+        this.setBackground(Color.darkGray);
         for(int a=0;a<statsGrid.length;a++){
             for(int b=0;b<statsGrid[a].length;b++){
                 statsGrid[a][b] = new JButton();

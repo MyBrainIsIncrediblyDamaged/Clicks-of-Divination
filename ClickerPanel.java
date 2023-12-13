@@ -179,7 +179,7 @@ public class ClickerPanel extends JPanel{
                         clicked.setMultiplier(2+(clicked.getCount()/5));;
                         sPanel.sources[clicked.getIndex()].addMult(clicked.getMultiplier() - 1);
                         clicked.setCost(clicked.getCost() * 30);
-                        clicked.setToolTipText("Multiply " + sPanel.sources[clicked.getIndex()].getName() + " profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
+                        clicked.setToolTipText("Multiply " + clicked.getName() + " profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
                         }
                         if(clicked.getTarget().equals("DEs")){
                         double[] mults = {2,2,2,3,3,4,5};
@@ -240,6 +240,10 @@ public class ClickerPanel extends JPanel{
                 Upgrades[i] = new Upgrade();
                 Upgrades[i].setPreferredSize(new Dimension(150,150));
                 Upgrades[i].addActionListener(new UpgradeListener());
+                Upgrades[i].setBorderPainted(false);
+                Upgrades[i].setContentAreaFilled(false);
+                Upgrades[i].setFocusPainted(false);
+                Upgrades[i].setOpaque(false);
             }
             ganesha.addActionListener(new HomonculusListener());
             this.add(new JLabel(),0);
@@ -259,27 +263,31 @@ public class ClickerPanel extends JPanel{
             Upgrades[0].setTarget("Cp");
             this.add(Upgrades[0],3);
             //Add the Second Upgrade (Profit per second Upgrade)
+            ic = new ImageIcon("Upgrade_Icons/ProfMult.png");
+            ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
             Upgrades[1].setName("Profit Upgrade");
             Upgrades[1].setToolTipText("Multiply Profits by 2X | Cost: 100");
             Upgrades[1].setCost(100);
             Upgrades[1].setMultiplier(2);
-            Upgrades[1].setIcon(null);
+            Upgrades[1].setIcon(ic);
             Upgrades[1].setHidden(false);
             Upgrades[1].setAvailable(true);
             Upgrades[1].setTarget("DEs");
             this.add(Upgrades[1],4);
             //Add the Third Upgrade ( Autoclick Profit Upgrade)
+            ic = new ImageIcon("Upgrade_Icons/AutoClicker.png");
+            ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
             Upgrades[2].setName("Autoclick Profit Upgrade");
             Upgrades[2].setToolTipText("Multiply Autoclick Profit by 1.5X | Cost: 100");
             Upgrades[2].setMultiplier(1.5);
-            Upgrades[2].setIcon(null);
+            Upgrades[2].setIcon(ic);
             Upgrades[2].setCost(100);
             Upgrades[2].setTarget("ACp");
             Upgrades[2].setHidden(false);
             Upgrades[2].setAvailable(true);
             this.add(Upgrades[2],5);
             //Add the Crystal Ball upgrade
-            ic = new ImageIcon("CrystalBall.png");
+            ic = new ImageIcon("Source_Icons/CrystalBall.png");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
             Upgrades[3].setName("Scrying Orb profit multiplier");
             Upgrades[3].setToolTipText("Muliply Scrying Orb Profits by 2X | Cost: 500");
@@ -305,10 +313,12 @@ public class ClickerPanel extends JPanel{
             Upgrades[4].setIndex(1);
             //Add the Rune Tablet upgrade
             this.add(Upgrades[4],7);
+            ic = new ImageIcon("Source_Icons/Rune.jpg");
+            ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
             Upgrades[5].setName("Rune Tablet profit multiplier");
             Upgrades[5].setToolTipText("Multiply Rune Tablet Profits by 2X | Cost: 5000");
             Upgrades[5].setMultiplier(2);
-            Upgrades[5].setIcon(null);
+            Upgrades[5].setIcon(ic);
             Upgrades[5].setCost(5000);
             Upgrades[5].setTarget("Sourceprofit");
             Upgrades[5].setHidden(false);
@@ -316,10 +326,12 @@ public class ClickerPanel extends JPanel{
             Upgrades[5].setIndex(2);
             this.add(Upgrades[5],8);
             //Add the Cauldron upgrade
+            ic = new ImageIcon("Source_Icons/Cauldron.jpg");
+            ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
             Upgrades[6].setName("Cauldron profit multiplier");
             Upgrades[6].setToolTipText("Multiply Cauldron Profits by 2X | Cost: 18000");
             Upgrades[6].setMultiplier(2);
-            Upgrades[6].setIcon(null);
+            Upgrades[6].setIcon(ic);
             Upgrades[6].setCost(18000);
             Upgrades[6].setTarget("Sourceprofit");
             Upgrades[6].setHidden(false);
@@ -327,10 +339,12 @@ public class ClickerPanel extends JPanel{
             Upgrades[6].setIndex(3);
             this.add(Upgrades[6],9);
             //Add the Tarot Card upgrade
+            ic = new ImageIcon("Upgrade_Icons/Strength.png");
+            ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
             Upgrades[7].setName("Tarot Card profit multiplier");
             Upgrades[7].setToolTipText("Multiply Tarot Card Profits by 2X | Cost: 300000");
             Upgrades[7].setMultiplier(2);
-            Upgrades[7].setIcon(null);
+            Upgrades[7].setIcon(ic);
             Upgrades[7].setCost(300000);
             Upgrades[7].setTarget("Sourceprofit");
             Upgrades[7].setHidden(false);
@@ -397,18 +411,18 @@ public class ClickerPanel extends JPanel{
             sources[i].setFocusPainted(false);
             sources[i].setOpaque(false);
         }
-        sources[0].setIcon(new ImageIcon("CrystalBall.png"));
+        sources[0].setIcon(new ImageIcon("Source_Icons/CrystalBall.png"));
         sources[0].setup(3,"Scrying Orb",.25,1.16);
-        sources[1].setIcon(new ImageIcon("sacredText.jpg"));
+        sources[1].setIcon(new ImageIcon("Source_Icons/sacredText.jpg"));
         sources[1].setup(40, "Sacred Text", 2.5,1.17);
-        sources[2].setIcon(new ImageIcon("Rune.jpg"));
-        sources[2].setup(460,"Rune Tablet",14,1.18);
-        sources[3].setIcon(new ImageIcon("Cauldron.jpg"));
-        sources[3].setup(7000,"Cauldron",126,1.19);
-        sources[4].setIcon(new ImageIcon("Card.png"));
-        sources[4].setup(130000,"Tarot Card",7300,1.2);
-        sources[5].setIcon(new ImageIcon("EoG.jpg"));
-        sources[5].setup(28000000,"Attention of a Deity",90000,1.21);
+        sources[2].setIcon(new ImageIcon("Source_Icons/Rune.jpg"));
+        sources[2].setup(460,"Rune Tablet",18,1.18);
+        sources[3].setIcon(new ImageIcon("Source_Icons/Cauldron.jpg"));
+        sources[3].setup(7000,"Cauldron",254,1.19);
+        sources[4].setIcon(new ImageIcon("Source_Icons/Card.png"));
+        sources[4].setup(130000,"Tarot Card",73000,1.2);
+        sources[5].setIcon(new ImageIcon("Source_Icons/EoG.jpg"));
+        sources[5].setup(28000000,"Attention of a Deity",200000,1.21);
         for(int i = 0; i < sources.length;i++){
             sNames[i].setText(sources[i].getName());
             sCosts[i].setText(sources[i].getCost() + "DE");
