@@ -564,9 +564,16 @@ public class ClickerPanel extends JPanel{
         ic = (ImageIcon)summons[1].getIcon();
         summons[1].setIcon(new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1)));
         summons[2] = new Summon("Elder Thing",15,stats);
-
+        ic = new ImageIcon("Upgrade_Icons/Elder-Thing.jpg");
+        summons[2].setIcon(new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1)));
+        ic = new ImageIcon("Upgrade_Icons/Wotw.png");
+        summons[0].setIcon(new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1)));
         for(int i = 0;i<summons.length;i++){
             int x = (int)Math.pow(5,(i+1));
+            summons[i].setBorderPainted(false);
+            summons[i].setContentAreaFilled(false);
+            summons[i].setFocusPainted(false);
+            summons[i].setOpaque(false);
             summons[i].setCost(100 * x);
             summons[i].setToolTipText(summons[i].getsName()+" Autoclicks " + summons[i].getACs() + " times a Second | Cost: " + summons[i].getCost());
             summons[i].setPreferredSize(new Dimension(150, 300));
