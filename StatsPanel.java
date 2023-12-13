@@ -79,7 +79,10 @@ public class StatsPanel extends JPanel{
         this.ACpm = mult * ACpm;
         this.ACp = Cp * ACpm * DIm;
     }
- public void updateACp(){
+    /**
+     * Replaces setACp
+     */
+    public void updateACp(){
         this.ACp = Cp * ACpm;
     }
     public void setDI(long DI){

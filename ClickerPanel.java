@@ -558,7 +558,7 @@ public class ClickerPanel extends JPanel{
         ImageIcon ic;
         this.setLayout(new FlowLayout());
         summons = new Summon[3];
-        summons[0] = new Summon("Fae",5,stats);
+        summons[0] = new Summon("Will o the Wisp",5,stats);
         summons[1] = new Summon("The Color Out of Space",10,stats);
         summons[1].setIcon(new ImageIcon("Upgrade_Icons/Color-OoS.jpg"));
         ic = (ImageIcon)summons[1].getIcon();
