@@ -7,11 +7,13 @@ public class Upgrade extends JButton{
     boolean isHidden;
     int cost;
     double multiplier;
+    double init_mult;
     int count;
     String target;
     String name;
     String description;
     int index;
+    int base_cost;
     public Upgrade(){
         this.isAvailable = false;
         this.isHidden = true;
@@ -23,7 +25,9 @@ public class Upgrade extends JButton{
         this.isAvailable = false;
         this.isHidden = true;
         this.cost = cost;
+        this.base_cost = cost;
         this.multiplier = multiplier;
+        this.init_mult = multiplier;
         this.name = name;
         this.count = 0;
         this.target = "";
@@ -48,25 +52,50 @@ public class Upgrade extends JButton{
     public boolean getHidden(){
         return isHidden;
     }
-    
+    /*
+     * Sets whether the upgrade is hidden or not.
+     */
     public void setHidden(boolean isHidden){
         this.isHidden = isHidden;
     }
+    /**
+     * outputs the quantity of the upgrade.
+     * @return quantity of the count.
+     */
     public int getCount(){
         return count;
     }
+    /**
+     * outputs the name of the upgrade
+     * @return name for the upgrade.
+     */
     public String getName(){
         return this.name;
     }
+    /**
+     * increment the quantity of the upgrade
+     */
     public void addCount(){
         this.count++;
     }
+    /**
+     * outputs the Index
+     * @return Index for source upgrades
+     */
     public int getIndex(){
         return index;
     }
+    /**
+     * sets the index
+     * @param i index to set to
+     */
     public void setIndex(int i){
         this.index = i;
     }
+    /**
+     * outputs upgrade cost
+     * @return
+     */
     public int getCost(){
         return cost;
     }
@@ -98,6 +127,8 @@ public class Upgrade extends JButton{
     public void purchase(int count){
         this.count += count;
         this.isAvailable = false;
+    }
+    public void reset(){
     }
 
 }

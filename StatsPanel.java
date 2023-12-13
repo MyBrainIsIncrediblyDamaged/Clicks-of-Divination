@@ -67,6 +67,7 @@ public class StatsPanel extends JPanel{
     //Setters
     public void updateCp(){
         this.Cp = CpBase * CpMult * DIm;
+        updateACp();
     }
     public void addCp(int Cp){
         this.CpBase += Cp;

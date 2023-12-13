@@ -109,7 +109,7 @@ public class ClickerPanel extends JPanel{
             for(int i = 0; i < summons.length;i++){
                 summons[i].updateStats(stats);
             }
-                int[] CpBonus = {0,4,26,80,123,567,1000};
+                int[] CpBonus = {1,4,26,80,123,567,1000};
                     upgrades.Upgrades[1].setAvailable(true);
                     for(int i = 1; i < CTHRESHOLDS.length;i++){
                     if(upgradebought){
@@ -117,7 +117,7 @@ public class ClickerPanel extends JPanel{
                     if(cCount >= CTHRESHOLDS[i]){
                         upgrades.Upgrades[0].setAvailable(true);
                         upgrades.Upgrades[0].setHidden(false);
-                        upgrades.Upgrades[0].setMultiplier(CpBonus[i] + upgrades.Upgrades[0].getMultiplier());
+                        upgrades.Upgrades[0].setMultiplier(Math.pow(3,upgrades.Upgrades[0].getCount()));
                         upgrades.Upgrades[0].setCost((int) upgrades.Upgrades[0].getCost() * 7+1);
                         upgrades.Upgrades[0].setToolTipText("Add " + upgrades.Upgrades[0].getMultiplier() + "Click Profit | Cost: " + upgrades.Upgrades[0].getCost());
                         upgradebought = false;
@@ -168,6 +168,7 @@ public class ClickerPanel extends JPanel{
                         }
                         if(clicked.getTarget().equals("ACp")){
                         double[] mults = {1.5,2,2,2,3,3,4};
+                        clicked.setMultiplier(1.5 + (0.5*clicked.getCount()));
                         stats.addACp(clicked.getMultiplier());
                         clicked.setCost((int)Math.pow(clicked.getCost(),1.12));
                         clicked.setToolTipText("Multiply Autoclick profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
@@ -175,13 +176,14 @@ public class ClickerPanel extends JPanel{
                         }
                         if(clicked.getTarget().equals("Sourceprofit")){
                         double[] mults = {2,2,2,2,2,3,5};
+                        clicked.setMultiplier(2+(clicked.getCount()/5));;
                         sPanel.sources[clicked.getIndex()].addMult(clicked.getMultiplier() - 1);
                         clicked.setCost(clicked.getCost() * 30);
                         clicked.setToolTipText("Multiply " + sPanel.sources[clicked.getIndex()].getName() + " profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
                         }
                         if(clicked.getTarget().equals("DEs")){
                         double[] mults = {2,2,2,3,3,4,5};
-                        clicked.setMultiplier(mults[clicked.getCount()]);;
+                        clicked.setMultiplier(2+(clicked.getCount()/5));;
                         stats.setPMult(stats.getPMult() + clicked.getMultiplier() - 1);
                         clicked.setCost(clicked.getCost() * 50);
                         clicked.setToolTipText("Multiply non-click profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
@@ -287,6 +289,7 @@ public class ClickerPanel extends JPanel{
             Upgrades[3].setTarget("Sourceprofit");
             Upgrades[3].setHidden(false);
             Upgrades[3].setAvailable(true);
+            Upgrades[3].setIndex(0);
             this.add(Upgrades[3],6);
             //Add the Sacred Text upgrade
             ic = new ImageIcon("Upgrade_Icons/Sacred-Text-Upgrade.png");
@@ -299,6 +302,7 @@ public class ClickerPanel extends JPanel{
             Upgrades[4].setTarget("Sourceprofit");
             Upgrades[4].setHidden(false);
             Upgrades[4].setAvailable(true);
+            Upgrades[4].setIndex(1);
             //Add the Rune Tablet upgrade
             this.add(Upgrades[4],7);
             Upgrades[5].setName("Rune Tablet profit multiplier");
@@ -309,6 +313,7 @@ public class ClickerPanel extends JPanel{
             Upgrades[5].setTarget("Sourceprofit");
             Upgrades[5].setHidden(false);
             Upgrades[5].setAvailable(true);
+            Upgrades[5].setIndex(2);
             this.add(Upgrades[5],8);
             //Add the Cauldron upgrade
             Upgrades[6].setName("Cauldron profit multiplier");
@@ -319,6 +324,7 @@ public class ClickerPanel extends JPanel{
             Upgrades[6].setTarget("Sourceprofit");
             Upgrades[6].setHidden(false);
             Upgrades[6].setAvailable(true);            
+            Upgrades[6].setIndex(3);
             this.add(Upgrades[6],9);
             //Add the Tarot Card upgrade
             Upgrades[7].setName("Tarot Card profit multiplier");
@@ -329,6 +335,7 @@ public class ClickerPanel extends JPanel{
             Upgrades[7].setTarget("Sourceprofit");
             Upgrades[7].setHidden(false);
             Upgrades[7].setAvailable(true);
+            Upgrades[7].setIndex(4);
             this.add(Upgrades[7],10);
             //Add the Attention of a Deity upgrade
             ic = new ImageIcon("Upgrade_Icons/Color-OoS2.jpg");
@@ -341,6 +348,7 @@ public class ClickerPanel extends JPanel{
             Upgrades[8].setTarget("Sourceprofit");
             Upgrades[8].setHidden(false);
             Upgrades[8].setAvailable(true);
+            Upgrades[8].setIndex(5);
             this.add(Upgrades[8],11);
             this.add(new JLabel(),12);
             this.add(ganesha,13);
@@ -551,9 +559,12 @@ public class ClickerPanel extends JPanel{
             summons[i].addActionListener(new SummonsListener());
             this.add(summons[i], i);
         }
-
-
-        
+        }
+        public Summon getSummon(int index){
+            return summons[index];
+        }
+        public int getSummons(){
+            return summons.length;
         }
         public int getAutoClicks(){
             int output = 0;
@@ -583,13 +594,22 @@ public class ClickerPanel extends JPanel{
         }
         public void Create(){
             Update();
+            for (int i = 0; i < upgrades.Upgrades.length;i++){
+                upgrades.Upgrades[i].reset();
+            }
             DILevel += stats.getDI();
+            cCount = 0;
+
             sPanel.reset();
             stats.Reset();
             sTimer.stop();
             sTimer = new Timer(25, new iListener());
             stats.setDI(DILevel);
             sTimer.start();
+            for(int i = 0; i <summoner.getSummons();i++){
+                if(summoner.getSummon(i).getSummoned()){
+                summoner.getSummon(i).Stop();}
+            }
         }
     }
 

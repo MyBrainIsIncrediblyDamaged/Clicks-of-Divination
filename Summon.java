@@ -72,9 +72,7 @@ public class Summon extends JButton{
                 time--;
             }
             else if(time==0){
-                summon.stop();
-                stopper.stop();
-                setSummoned(false);
+                Stop();
             }
         }
     }
@@ -86,5 +84,10 @@ public class Summon extends JButton{
     }
     public void setSummoned(boolean isSummoned){
         this.isSummoned = isSummoned;
+    }
+    public void Stop(){
+        summon.stop();
+        stopper.stop();
+        setSummoned(false);
     }
 }
