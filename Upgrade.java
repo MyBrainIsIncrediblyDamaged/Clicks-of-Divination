@@ -129,6 +129,9 @@ public class Upgrade extends JButton{
         this.isAvailable = false;
     }
     public void reset(){
+        this.count = 0;
+        this.cost = base_cost;
+        this.multiplier = init_mult;
     }
 
 }

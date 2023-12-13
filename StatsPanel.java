@@ -16,7 +16,8 @@ public class StatsPanel extends JPanel{
         Divine Insight
      */
     DecimalFormat df = new DecimalFormat("0.00");
-    double DE = 400000000;
+    double DE = 0;
+    //double DE = 400000000;
     long DEl= 0L;
     double DEs = 0;
     double Cp = 1;
