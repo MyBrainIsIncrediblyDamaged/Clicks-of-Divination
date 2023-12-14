@@ -17,7 +17,7 @@ public class StatsPanel extends JPanel{
      */
     DecimalFormat df = new DecimalFormat("0.00");
     double DE = 0;
-    //double DE = 400000000;
+    
     long DEl= 0L;
     double DEs = 0;
     double Cp = 1;
@@ -80,7 +80,7 @@ public class StatsPanel extends JPanel{
         this.ACp = Cp * ACpm * DIm;
     }
     /**
-     * Replaces setACp
+     * Replaces setACp, due to multipliers
      */
     public void updateACp(){
         this.ACp = Cp * ACpm;
@@ -88,7 +88,9 @@ public class StatsPanel extends JPanel{
     public void setDI(long DI){
         this.DI = DI;
     }
-
+    public void setDE(double DE){
+        this.DE = DE;
+    }
     public void setDIm(double DIm){
         this.DIm = DIm;
     }
@@ -98,8 +100,12 @@ public class StatsPanel extends JPanel{
     public void setDEs(double DEs){
         this.DEs = DEs;
     }
+    /**
+     * Creates a stats panel, with a 2*3 array of buttons (currently in a flow layout)
+     */
     public StatsPanel(){
         statsGrid = new JButton[2][3];
+        //DE = 400000000;
         this.setBackground(Color.darkGray);
         for(int a=0;a<statsGrid.length;a++){
             for(int b=0;b<statsGrid[a].length;b++){

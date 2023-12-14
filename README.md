@@ -1,24 +1,18 @@
     INCOMPLETE
-# Project X: Project Name
+# Project 6: Clicker Game
 
 
-* Author: James Hooson2
-* Class: CS121 Section X
+* Author: James Hooson
+* Class: CS121 
 * Semester: Fall 2023
 
 ## Overview
 
-Concisely explain what the program does. If this exceeds a couple of
-sentences, you're going too far. Generally you should be pulling this
-right from the project specification. I don't want you to just cut and
-paste, but paraphrase what is stated in the project specification.
+This program is a clicker game, click on the mirror image in the center of the screen, then purchase sources on the right panel which automatically grant you profits. Upgrades to those are on the left panel, which are unlocked by reaching thresholds in quantities.
 
 ## Compiling and Using
 
-This section should tell the user how to compile your code.  It is
-also appropriate to instruct the user how to use your code. Does your
-program require user input? If so, what does your user need to know
-about it to use it as quickly as possible?
+Compile using A compiling application or by using the javac command in a command prompt system. Use by using a JDK application or by using the java command in a command prompt system.
 
 ## Discussion
 
@@ -27,7 +21,9 @@ Discuss the issues and successes you encountered during programming
 have to answer all of them in order - they are a guideline to get you
 thinking.
   * What problems did you have? What went well?
+        My problems were plenty, Such as reset buttons, broken upgrades, broken counters, etc. I still have an upgrades issue.
   * What process did you go through to create the program?
+        
   * What did you have to research and learn on your own?
   * What kinds of errors did you get? How did you fix them?
   * What parts of the project did you find challenging?
