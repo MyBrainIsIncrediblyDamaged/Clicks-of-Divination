@@ -23,23 +23,24 @@ thinking.
   * What problems did you have? What went well?
         My problems were plenty, Such as reset buttons, broken upgrades, broken counters, etc. I still have an upgrades issue.
   * What process did you go through to create the program?
-        
+
   * What did you have to research and learn on your own?
+
   * What kinds of errors did you get? How did you fix them?
+
   * What parts of the project did you find challenging?
+
   * Is there anything that finally "clicked" for you in the process 
   of working on this project?
+
   * Is there anything that you would change about the project?
+
   * Can you apply what you learned in this project to future projects?
+
 
 ## Testing
 
-In this section, tell us how you tested your project.
-
-You are expected to test your projects before submitting them for
-final review. Pretend that your instructor is your manager or 
-customer at work. How would you ensure that you are delivering a 
-working solution to their requirements?
+I tested by compiling and executing the game.
 
 ## Extra Credit
 
@@ -48,6 +49,7 @@ be sure to call it out so the grader does not overlook it.
 
 ## Sources used
 
+https://
 If you used any sources outside of the lecture notes, class lab files,
 or text book you need to list them here. If you looked something up on
 stackoverflow.com and fail to cite it in this section it will be

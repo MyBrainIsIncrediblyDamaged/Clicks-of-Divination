@@ -49,6 +49,9 @@ public class Summon extends JButton{
     public void setCost(int cost){
         this.cost = cost;
     }
+    public void setACCount(int count){
+        this.autoclicks = count;
+    }
     /**
      * Triggers the Summon.
      */

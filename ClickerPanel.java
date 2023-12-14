@@ -13,7 +13,7 @@ public class ClickerPanel extends JPanel{
     //Thresholds for Upgrades
     final int[] STHRESHOLDS = {1,10,25,50,100,200,300,400,500};
     final int[] CTHRESHOLDS = {1,25,50,100,200,300,400,500};
-    final int [] ACTHRESHOLDS = {50,100,250,500,1000,2000};
+    final int [] ACTHRESHOLDS = {1,10,25,50,100,200,350,500};
     public boolean upgradebought = false;
     //Other Instance stuff
     DecimalFormat f = new DecimalFormat("#.##");
@@ -28,12 +28,11 @@ public class ClickerPanel extends JPanel{
     ClickListener clicker = new ClickListener();
     Summon[] summons; 
     SummonsPanel summoner;
-    JButton center = new JButton();
         /**
          * Creates the GUI.
          */
         public ClickerPanel(){
-        center.setText("Center");
+        this.setBackground(Color.GRAY);
         summoner = new SummonsPanel();
         layout = new BorderLayout();
         this.setLayout(layout);
@@ -45,9 +44,8 @@ public class ClickerPanel extends JPanel{
         this.stats = new StatsPanel();
         this.sPanel = new sourcePanel();
         this.upgrades = new UpgradePanel();
-        orb.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.blue, 5), BorderFactory.createLineBorder(Color.red, 10)));
         orb.setPreferredSize(new Dimension(324,324));
-        orb.setForeground(Color.RED);
+        orb.setBackground(Color.WHITE);
         this.sPanel.setPreferredSize(new Dimension(600, 20000));
         this.sPanel.setVisible(true);       
         this.add(orb, BorderLayout.CENTER);
@@ -112,7 +110,13 @@ public class ClickerPanel extends JPanel{
             for(int i = 0; i < summons.length;i++){
                 summons[i].updateStats(stats);
             }
-                    upgrades.Upgrades[1].setAvailable(true);
+                    
+            if(cCount == 0){
+                            upgrades.Upgrades[0].setCost(10);
+            upgrades.Upgrades[0].setMultiplier(1);
+            upgrades.Upgrades[0].setToolTipText("<html>Add " + upgrades.Upgrades[0].getMultiplier() + " Click Profit "+"<br>"+ "Cost: " + upgrades.Upgrades[0].getCost()+"<html>");
+            upgrades.Upgrades[0].setAvailable(true);
+            }
                     for(int i = 0; i < CTHRESHOLDS.length;i++){
                     if(upgradebought){
                     if(upgrades.Upgrades[0].getCount() == i){
@@ -158,7 +162,6 @@ public class ClickerPanel extends JPanel{
     public class UpgradeListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             Upgrade clicked = (Upgrade) e.getSource();
-            if(!clicked.getHidden()){
                 if(clicked.getAvailable()){
                     if(stats.DE >= (double)clicked.getCost()){
                         clicked.purchase(1);
@@ -193,8 +196,11 @@ public class ClickerPanel extends JPanel{
                         stats.Update();
                         sPanel.updateDEs();
 
-            }}}}
+            }}}
     }
+    /**
+     * ActionListener for the Homonculus creation button, Access to the Prestige system
+     */
     private class HomonculusListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             Homonculus clicked = (Homonculus)(e.getSource());
@@ -202,6 +208,9 @@ public class ClickerPanel extends JPanel{
                 clicked.Create();
             }
         }}
+        /**
+         * Summons are the Autoclickers.
+         */
     private class SummonsListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             Summon clicked = (Summon)(e.getSource());
@@ -380,7 +389,7 @@ public class ClickerPanel extends JPanel{
         this.setLayout(new GridLayout(6,3));
         this.getLayout();
         this.setPreferredSize(new Dimension(400, 600));
-        this.setBackground(Color.green);
+        this.setBackground(Color.WHITE);
         for (int i = 0; i < sources.length; i++){
             sNames[i] = new JLabel();
             sCosts[i] = new JLabel();
@@ -391,9 +400,9 @@ public class ClickerPanel extends JPanel{
             sources[i].setOpaque(false);
         }
         sources[0].setIcon(new ImageIcon("Source_Icons/CrystalBall.png"));
-        sources[0].setup(3,"Scrying Orb",.25,1.16);
+        sources[0].setup(3,"Scrying Orb",.5,1.16);
         sources[1].setIcon(new ImageIcon("Source_Icons/sacredText.jpg"));
-        sources[1].setup(40, "Sacred Text", 2.5,1.17);
+        sources[1].setup(40, "Sacred Text", 5,1.17);
         sources[2].setIcon(new ImageIcon("Source_Icons/Rune.jpg"));
         sources[2].setup(460,"Rune Tablet",18,1.18);
         sources[3].setIcon(new ImageIcon("Source_Icons/Cauldron.jpg"));
@@ -426,7 +435,7 @@ public class ClickerPanel extends JPanel{
     }
 }
     /**
-     * 
+     * Actionlistener for DE sources, allows for purchases.
      */
     private class sourceListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
@@ -449,7 +458,7 @@ public class ClickerPanel extends JPanel{
         }
     }
     /**
-     * 
+     * Button for the sources, allows for purchasing, with prices, s
      */
     private class sourceButton extends JButton{
         private double cost;
@@ -536,6 +545,7 @@ public class ClickerPanel extends JPanel{
         public SummonsPanel(){
         ImageIcon ic;
         this.setLayout(new FlowLayout());
+        this.setBackground(Color.white);
         summons = new Summon[3];
         summons[0] = new Summon("Will o the Wisp",5,stats);
         summons[1] = new Summon("The Color Out of Space",10,stats);
@@ -573,6 +583,11 @@ public class ClickerPanel extends JPanel{
             }
             return output;
         }
+        public void reset(){
+            for(int i = 0; i < summons.length; i++){
+                summons[i].setACCount(0);
+            }
+        }
     }
     /**
      * Your Levelling Mechanic, Resets DE, and Profit stuff
@@ -600,9 +615,12 @@ public class ClickerPanel extends JPanel{
             Update();
             for (int i = 0; i < upgrades.Upgrades.length;i++){
                 upgrades.Upgrades[i].reset();
+                upgrades.Upgrades[i].setAvailable(true);
+                upgrades.Upgrades[i].setHidden(false);
             }
             DILevel += stats.getDI();
             cCount = 0;
+            summoner.reset();
             
             sPanel.reset();
             stats.Reset();

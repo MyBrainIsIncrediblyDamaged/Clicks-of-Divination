@@ -130,10 +130,10 @@ public class Upgrade extends JButton{
     }
     public void reset(){
         this.isAvailable = false;
-        this.isHidden = true;
+        this.isHidden = false;
         this.count = 0;
-        this.cost = base_cost;
-        this.multiplier = init_mult;
+        setCost(base_cost);
+        setMultiplier(init_mult);
     }
 
 }
