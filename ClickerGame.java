@@ -6,7 +6,7 @@ import java.awt.Dimension;
 
 import javax.swing.*;
 public class ClickerGame {
-    static JFrame frame = new JFrame("Clicks of Divination");
+    static JFrame frame = new JFrame("Clicker game related to divination");
     
     public static void main(String[] args){
          ClickerPanel cPanel = new ClickerPanel();

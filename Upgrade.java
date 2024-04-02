@@ -1,11 +1,11 @@
 import javax.swing.*;
-import java.awt.*;
+
 
 public class Upgrade extends JButton{
     
     boolean isAvailable;
     boolean isHidden;
-    int cost;
+    Long cost;
     double multiplier;
     double init_mult;
     int count;
@@ -17,14 +17,14 @@ public class Upgrade extends JButton{
     public Upgrade(){
         this.isAvailable = false;
         this.isHidden = true;
-        this.cost = 0;
+        this.cost = 0L;
         this.multiplier = 1;
     }
     
     public Upgrade(String name, int cost, double multiplier){
         this.isAvailable = false;
         this.isHidden = true;
-        this.cost = cost;
+        this.cost = (long)cost;
         this.base_cost = cost;
         this.multiplier = multiplier;
         this.init_mult = multiplier;
@@ -96,11 +96,11 @@ public class Upgrade extends JButton{
      * outputs upgrade cost
      * @return
      */
-    public int getCost(){
+    public long getCost(){
         return cost;
     }
 
-    public void setCost(int cost){
+    public void setCost(long cost){
         this.cost = cost;
     }
 
@@ -128,12 +128,16 @@ public class Upgrade extends JButton{
         this.count += count;
         this.isAvailable = false;
     }
+    /**
+     * Sets the count to zero, and resets the costs and multipliers
+     */
     public void reset(){
         this.isAvailable = false;
         this.isHidden = false;
         this.count = 0;
         setCost(base_cost);
         setMultiplier(init_mult);
+        
     }
 
 }

@@ -17,14 +17,13 @@ public class StatsPanel extends JPanel{
      */
     DecimalFormat df = new DecimalFormat("0.00");
     double DE = 0;
-    
     long DEl= 0L;
     double DEs = 0;
     double Cp = 1;
     int CpBase = 1;
     double CpMult = 1;
     double ACp = 1;
-    long DI = 0;
+    double DI = 0;
     double DIm = 1.04;
     double Cpm = 1;
     double ACpm = 1;
@@ -51,7 +50,7 @@ public class StatsPanel extends JPanel{
         return ACp;
     }
 
-    public long getDI(){
+    public double getDI(){
         return DI;
     }
 
@@ -85,7 +84,7 @@ public class StatsPanel extends JPanel{
     public void updateACp(){
         this.ACp = Cp * ACpm;
     }
-    public void setDI(long DI){
+    public void setDI(double DI){
         this.DI = DI;
     }
     public void setDE(double DE){
@@ -105,7 +104,7 @@ public class StatsPanel extends JPanel{
      */
     public StatsPanel(){
         statsGrid = new JButton[2][3];
-        //DE = 400000000;
+        DE = 400000000;
         this.setBackground(Color.darkGray);
         for(int a=0;a<statsGrid.length;a++){
             for(int b=0;b<statsGrid[a].length;b++){

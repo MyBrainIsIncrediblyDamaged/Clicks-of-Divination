@@ -13,7 +13,7 @@ public class ClickerPanel extends JPanel{
     //Thresholds for Upgrades
     final int[] STHRESHOLDS = {1,10,25,50,100,200,300,400,500};
     final int[] CTHRESHOLDS = {1,25,50,100,200,300,400,500};
-    final int [] ACTHRESHOLDS = {1,10,25,50,100,200,350,500};
+    final int[] ACTHRESHOLDS = {1,10,25,50,100,200,350,500};
     public boolean upgradebought = false;
     //Other Instance stuff
     DecimalFormat f = new DecimalFormat("#.##");
@@ -103,7 +103,7 @@ public class ClickerPanel extends JPanel{
         public void actionPerformed(ActionEvent e){
             sPanel.updateDEs();
             stats.Sincrement();
-            
+            upgrades.ganesha.Update();
             for(int i = 0; i < sPanel.sources.length;i++){
                 sPanel.sources[i].setToolTipText("Profit Per Unit: "+(sPanel.sources[i].getMult()*sPanel.sources[i].getProfit() * stats.getPMult() * stats.getDIm()) +"\n Total Profit:" + (sPanel.sources[i].getCount() * sPanel.sources[i].getMult() * sPanel.sources[i].getProfit() * stats.getPMult() * stats.getDIm()));
             }
@@ -111,49 +111,20 @@ public class ClickerPanel extends JPanel{
                 summons[i].updateStats(stats);
             }
                     
-            if(cCount == 0){
-                            upgrades.Upgrades[0].setCost(10);
+            if(cCount == 0 && stats.DE == 0){
+            upgrades.Upgrades[0].setCost(10);
             upgrades.Upgrades[0].setMultiplier(1);
-            upgrades.Upgrades[0].setToolTipText("<html>Add " + upgrades.Upgrades[0].getMultiplier() + " Click Profit "+"<br>"+ "Cost: " + upgrades.Upgrades[0].getCost()+"<html>");
+            upgrades.Upgrades[0].setToolTipText("<html>Add " + upgrades.Upgrades[0].getMultiplier() + " Click Profit "+"<br>"+ "Cost: " + upgrades.Upgrades[0].getCost()+"<br>Requires: "+CTHRESHOLDS[upgrades.Upgrades[0].getCount()]+"</html>");
             upgrades.Upgrades[0].setAvailable(true);
             }
-                    for(int i = 0; i < CTHRESHOLDS.length;i++){
-                    if(upgradebought){
-                    if(upgrades.Upgrades[0].getCount() == i){
-                    if(cCount >= CTHRESHOLDS[i]){
-                        upgrades.Upgrades[0].setAvailable(true);
-                        upgrades.Upgrades[0].setHidden(false);
-                        upgrades.Upgrades[0].setMultiplier(Math.pow(3,upgrades.Upgrades[0].getCount()));
-                        upgrades.Upgrades[0].setCost((int) upgrades.Upgrades[0].getCost() * 7+1);
-                        upgrades.Upgrades[0].setToolTipText("<html>Add " + upgrades.Upgrades[0].getMultiplier() + " Click Profit "+"<br>"+ "Cost: " + upgrades.Upgrades[0].getCost()+"<html>");
-                        upgradebought = false;
-                    }
-                    if(summoner.getAutoClicks() >= ACTHRESHOLDS[i]){
-                        upgrades.Upgrades[2].setAvailable(true);
-                    }
-                    }
-                    }
-                    if(sPanel.sources[0].getCount() >= STHRESHOLDS[i]){
-                       upgrades.Upgrades[3].setAvailable(true); 
-                    }
-                    if(sPanel.sources[1].getCount() >= STHRESHOLDS[i]){
-                       upgrades.Upgrades[4].setAvailable(true); 
-                    }
-                    if(sPanel.sources[2].getCount() >= STHRESHOLDS[i]){
-                       upgrades.Upgrades[5].setAvailable(true); 
-                    }
-                    if(sPanel.sources[3].getCount() >= STHRESHOLDS[i]){
-                       upgrades.Upgrades[6].setAvailable(true); 
-                    }
-                    if(sPanel.sources[4].getCount() >= STHRESHOLDS[i]){
-                       upgrades.Upgrades[7].setAvailable(true); 
-                    }
-                    if(sPanel.sources[5].getCount() >= STHRESHOLDS[i]){
-                       upgrades.Upgrades[8].setAvailable(true); 
-                    }
-
-                    }
-                
+            for(int i = 3; i < upgrades.Upgrades.length;i++){
+                int index = upgrades.Upgrades[i].getIndex();
+                if(sPanel.sources[index].getCount() >= STHRESHOLDS[upgrades.Upgrades[i].getCount()]){
+                    upgrades.Upgrades[i].setAvailable(true);
+                }
+            }
+            if(stats.DE == Math.pow(10,upgrades.Upgrades[2].getCount() * 2));
+            
         }
     }
     /*
@@ -172,31 +143,29 @@ public class ClickerPanel extends JPanel{
                         upgradebought = true;
                         }
                         if(clicked.getTarget().equals("ACp")){
-                        double[] mults = {1.5,2,2,2,3,3,4};
                         clicked.setMultiplier(1.5 + (0.5*clicked.getCount()));
                         stats.addACp(clicked.getMultiplier());
-                        clicked.setCost((int)Math.pow(clicked.getCost(),1.12));
-                        clicked.setToolTipText("Multiply Autoclick profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
+                        clicked.setCost((int)(clicked.getCost() * (10+0.5*(clicked.getCount()))));
+                        clicked.setToolTipText("<html>"+"Multiply Autoclick profit by " + clicked.getMultiplier() + "X"+"<br>"+"Cost:" + clicked.getCost() + "DE<br>" + "Requires: " + ACTHRESHOLDS[clicked.getCount()] + " Autoclicks" + "</html>");
 
                         }
                         if(clicked.getTarget().equals("Sourceprofit")){
-                        double[] mults = {2,2,2,2,2,3,5};
-                        clicked.setMultiplier(2+(clicked.getCount()/5));;
+                        clicked.setMultiplier(clicked.getMultiplier() + 0.5);
                         sPanel.sources[clicked.getIndex()].addMult(clicked.getMultiplier() - 1);
                         clicked.setCost(clicked.getCost() * 30);
-                        clicked.setToolTipText("Multiply " + clicked.getName() + " profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
+                        clicked.setToolTipText("<html>" +"Multiply " + clicked.getName() + " profit by " + clicked.getMultiplier() + "X"+"<br>"+"Cost:" + clicked.getCost() + "DE<br>" + "Requires: " + STHRESHOLDS[clicked.getCount()] + sPanel.sources[clicked.getIndex()].getName() + "s</html>");
                         }
                         if(clicked.getTarget().equals("DEs")){
-                        double[] mults = {2,2,2,3,3,4,5};
                         clicked.setMultiplier(2+(clicked.getCount()/5));;
                         stats.setPMult(stats.getPMult() + clicked.getMultiplier() - 1);
                         clicked.setCost(clicked.getCost() * 50);
-                        clicked.setToolTipText("Multiply non-click profit by " + clicked.getMultiplier() + "X | Cost:" + clicked.getCost());
+                        clicked.setToolTipText("<html>Multiply non-click profit by " + clicked.getMultiplier() + "X"+"<br>"+ "Cost: " + clicked.getCost() +"DE</html>");
                         }
                         stats.Update();
                         sPanel.updateDEs();
 
-            }}}
+            }}
+        }
     }
     /**
      * ActionListener for the Homonculus creation button, Access to the Prestige system
@@ -268,7 +237,7 @@ public class ClickerPanel extends JPanel{
             this.add(new JLabel(),2);
             ganesha.setToolTipText("Create Homonculus with Divine Insight | " + "+ " + ganesha.getDILevel());
             //Add the First upgrade (Click Profit Upgrade)
-            Upgrades[0].setToolTipText("Add 1 Click Profit | Cost: 10" );
+            Upgrades[0].setToolTipText("<html>Add 1 Click Profit <br>Cost: 10</html>" );
             Upgrades[0].setAvailable(true);
             Upgrades[0].setHidden(false);
             Upgrades[0].setIcon(ic);
@@ -277,7 +246,7 @@ public class ClickerPanel extends JPanel{
             //Add the Second Upgrade (Profit per second Upgrade)
             ic = new ImageIcon("Upgrade_Icons/ProfMult.png");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[1].setToolTipText("Multiply Profits by 2X | Cost: 100");
+            Upgrades[1].setToolTipText("<html>Multiply Profits by 2X<br>Cost: 100</html>");
             Upgrades[1].setIcon(ic);
             Upgrades[1].setHidden(false);
             Upgrades[1].setAvailable(true);
@@ -286,7 +255,7 @@ public class ClickerPanel extends JPanel{
             //Add the Third Upgrade ( Autoclick Profit Upgrade)
             ic = new ImageIcon("Upgrade_Icons/AutoClicker.png");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[2].setToolTipText("Multiply Autoclick Profit by 1.5X | Cost: 100");
+            Upgrades[2].setToolTipText("<html>Multiply Autoclick Profit by 1.5X<br>Cost: 100</html>");
             Upgrades[2].setIcon(ic);
             Upgrades[2].setTarget("ACp");
             Upgrades[2].setHidden(false);
@@ -295,7 +264,7 @@ public class ClickerPanel extends JPanel{
             //Add the Crystal Ball upgrade
             ic = new ImageIcon("Source_Icons/CrystalBall.png");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[3].setToolTipText("Muliply Scrying Orb Profits by 2X | Cost: 500");
+            Upgrades[3].setToolTipText("<html>Muliply Scrying Orb Profits by 2X<br>Cost: 500</html>");
             Upgrades[3].setIcon(ic);
             Upgrades[3].setTarget("Sourceprofit");
             Upgrades[3].setHidden(false);
@@ -305,7 +274,7 @@ public class ClickerPanel extends JPanel{
             //Add the Sacred Text upgrade
             ic = new ImageIcon("Upgrade_Icons/Sacred-Text-Upgrade.png");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[4].setToolTipText("Multiply Sacred Text Profits by 2X | Cost: 1250");
+            Upgrades[4].setToolTipText("<html>Multiply Sacred Text Profits by 2X<br>Cost: 1250</html>");
             Upgrades[4].setIcon(ic);
             Upgrades[4].setTarget("Sourceprofit");
             Upgrades[4].setHidden(false);
@@ -315,7 +284,7 @@ public class ClickerPanel extends JPanel{
             this.add(Upgrades[4],7);
             ic = new ImageIcon("Source_Icons/Rune.jpg");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[5].setToolTipText("Multiply Rune Tablet Profits by 2X | Cost: 5000");
+            Upgrades[5].setToolTipText("<html>Multiply Rune Tablet Profits by 2X<br>Cost: 5000</html>");
             Upgrades[5].setIcon(ic);
             Upgrades[5].setTarget("Sourceprofit");
             Upgrades[5].setHidden(false);
@@ -325,7 +294,7 @@ public class ClickerPanel extends JPanel{
             //Add the Cauldron upgrade
             ic = new ImageIcon("Source_Icons/Cauldron.jpg");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[6].setToolTipText("Multiply Cauldron Profits by 2X | Cost: 18000");
+            Upgrades[6].setToolTipText("<html>Multiply Cauldron Profits by 2X<br>Cost: 18000</html>");
             Upgrades[6].setIcon(ic);
             Upgrades[6].setTarget("Sourceprofit");
             Upgrades[6].setHidden(false);
@@ -335,7 +304,7 @@ public class ClickerPanel extends JPanel{
             //Add the Tarot Card upgrade
             ic = new ImageIcon("Upgrade_Icons/Strength.png");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[7].setToolTipText("Multiply Tarot Card Profits by 2X | Cost: 300000");
+            Upgrades[7].setToolTipText("<html>Multiply Tarot Card Profits by 2X<br>Cost: 300000</html>");
             Upgrades[7].setIcon(ic);
             Upgrades[7].setTarget("Sourceprofit");
             Upgrades[7].setHidden(false);
@@ -345,7 +314,7 @@ public class ClickerPanel extends JPanel{
             //Add the Attention of a Deity upgrade
             ic = new ImageIcon("Upgrade_Icons/Color-OoS2.jpg");
             ic = new ImageIcon(ic.getImage().getScaledInstance(100, 100, 1));
-            Upgrades[8].setToolTipText("Multiply Attention of a Deity Profits by 2X | Cost: 40000000");
+            Upgrades[8].setToolTipText("<html>Multiply Attention of a Deity Profits by 2X<br>Cost: 40000000</html>");
             Upgrades[8].setIcon(ic);
             Upgrades[8].setTarget("Sourceprofit");
             Upgrades[8].setHidden(false);
@@ -363,7 +332,7 @@ public class ClickerPanel extends JPanel{
     
     }
     /**
-     * Opens a  
+     * Opens a panel of sources, they get you money over time, instead of clicks
      */
     public class sourcePanel extends JPanel {
         public void updateDEs(){
@@ -539,7 +508,7 @@ public class ClickerPanel extends JPanel{
         }
     }
     /**
-     * 
+     * JPanel for management of autoclickers, 
      */
     public class SummonsPanel extends JPanel {
         public SummonsPanel(){
@@ -590,10 +559,10 @@ public class ClickerPanel extends JPanel{
         }
     }
     /**
-     * Your Levelling Mechanic, Resets DE, and Profit stuff
+     * Your Levelling Mechanic, Resets DE, Upgrades,Sources, etc. and Gives you DI which is a general profit multiplier
      */
     public class Homonculus extends JButton{
-        long DILevel;
+        double DILevel;
         ImageIcon ganesha = new ImageIcon("Upgrade_Icons/Ganesha.jpg");
         public Homonculus(){
             ganesha = new ImageIcon(ganesha.getImage().getScaledInstance(100, 100, 1));
@@ -604,10 +573,14 @@ public class ClickerPanel extends JPanel{
             this.setFocusPainted(false);
             this.setOpaque(false);
         }
-        public long getDILevel(){
-            DILevel = (long)Math.sqrt(stats.DE / Math.pow(10,6));
+        /** */
+        public double getDILevel(){
+            DILevel = Math.sqrt(stats.DE / Math.pow(10,6));
             return DILevel;
         }
+        /**
+         * Updates the Tooltip Text
+         */
         public void Update(){
             this.setToolTipText("Create Homonculus with Divine Insight" + " | + " + getDILevel() + "DI");
         }
@@ -631,6 +604,7 @@ public class ClickerPanel extends JPanel{
             for(int i = 0; i <summoner.getSummons();i++){
                 if(summoner.getSummon(i).getSummoned()){
                 summoner.getSummon(i).Stop();}
+
             }
         }
     }
