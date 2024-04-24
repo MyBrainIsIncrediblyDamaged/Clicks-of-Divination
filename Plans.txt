@@ -1,0 +1,16 @@
+Sources : 6
+Upgrades : 9
+Prestige System: 1
+Prestige Upgrades: 3
+    DI profit mult bonus
+    DI profit add bonus
+    DI generation increase.
+
+Make upgrades work like those in cookie clicker/idle wizard.
+Make the cool Tooltips like in better clicker games.
+
+Summons: 3(atm) 6(planned total)
+    WIP: 5 clicks + Cp mult
+    WIP: 10 clicks + ACp mult
+    WIP: 30 clicks
+

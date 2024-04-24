@@ -17,13 +17,14 @@ public class StatsPanel extends JPanel{
      */
     DecimalFormat df = new DecimalFormat("0.00");
     double DE = 0;
+    
     long DEl= 0L;
     double DEs = 0;
     double Cp = 1;
     int CpBase = 1;
     double CpMult = 1;
     double ACp = 1;
-    double DI = 0;
+    long DI = 0;
     double DIm = 1.04;
     double Cpm = 1;
     double ACpm = 1;
@@ -50,7 +51,7 @@ public class StatsPanel extends JPanel{
         return ACp;
     }
 
-    public double getDI(){
+    public long getDI(){
         return DI;
     }
 
@@ -63,10 +64,9 @@ public class StatsPanel extends JPanel{
     public double getCpMult(){
         return CpMult;
     }
-
     //Setters
     public void updateCp(){
-        this.Cp = CpBase * CpMult * DIm;
+        this.Cp = (CpBase* Cpm) * DIm;
         updateACp();
     }
     public void addCp(int Cp){
@@ -76,6 +76,7 @@ public class StatsPanel extends JPanel{
 
     public void addACp(double mult){
         this.ACpm = mult * ACpm;
+        updateCp();
         this.ACp = Cp * ACpm * DIm;
     }
     /**
@@ -84,7 +85,7 @@ public class StatsPanel extends JPanel{
     public void updateACp(){
         this.ACp = Cp * ACpm;
     }
-    public void setDI(double DI){
+    public void setDI(long DI){
         this.DI = DI;
     }
     public void setDE(double DE){
@@ -100,11 +101,35 @@ public class StatsPanel extends JPanel{
         this.DEs = DEs;
     }
     /**
+     * Adds to the additive Click profit multiplier
+     * @param Cpm
+     */
+    public void addCpm(double Cpm){
+        this.Cpm *= Cpm;
+        updateCp();
+    }
+    public void addACpm(double ACpm){
+        this.ACpm += ACpm;
+    }
+    /**
+     * adds DE based on DEs per every whatever.
+     * @param t the amount of second ticks you want to add.
+     */
+    public void addDE(int t){
+        this.DE += (this.DEs *t);
+    }
+    public void addPMult(double pMult){
+        this.pMult *= pMult;
+    }
+    public void addDIm(double DIm){
+        this.DIm += DIm;
+    }
+    /**
      * Creates a stats panel, with a 2*3 array of buttons (currently in a flow layout)
      */
     public StatsPanel(){
         statsGrid = new JButton[2][3];
-        DE = 400000000;
+        //DE = 400000000;
         this.setBackground(Color.darkGray);
         for(int a=0;a<statsGrid.length;a++){
             for(int b=0;b<statsGrid[a].length;b++){
