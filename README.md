@@ -4,8 +4,10 @@ This is a clicker game where you click on a button (The magic mirror looking thi
 As of the 9/23/2024 Upload, there is no save system.
 
 ## To run the game
+Install the whole setup as a zip folder, or the images will not show and your experience will feel desolate and dead.
 install a JDK, you can use the following link, or whatever suits your fancy.
 https://www.oracle.com/java/technologies/downloads/
+
 
 After installing a JDK, run the file "ClickerGame-Divination.jar" by double clicking or by opening the menu and clicking on "Run"
 
