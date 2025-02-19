@@ -58,7 +58,6 @@ public class ClickerPanel extends JPanel{
         this.add(this.sPanel,BorderLayout.LINE_END);
         this.add(this.upgrades,BorderLayout.LINE_START);
         this.add(this.summoner, BorderLayout.PAGE_END);
-        this.add(this.TarotButton, BorderLayout.PAGE_END);
         this.setVisible(true);
         sTimer.start();
         cTimer.start();
@@ -251,6 +250,7 @@ public class ClickerPanel extends JPanel{
          * Palm reading
          * Clear sense stuff
          * Click Profit upgrades (**Required**)
+         * Adding the Panel Change.
          */
         Upgrade[] Upgrades;    
          Homonculus ganesha = new Homonculus();
@@ -368,6 +368,7 @@ public class ClickerPanel extends JPanel{
             this.add(Upgrades[8],11);
             this.add(new JLabel(),12);
             this.add(ganesha,13);
+            this.add(TarotButton,14);
         }
     
     
